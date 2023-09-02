@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block email_title %}Account Activation Email{% endblock email_title %}
+
+{% block body_content %}
+    <h2>Thank you for registering on our platform!</h2>
+    <div style="text-align: left;float: left;clear:both;padding-top: 10px;width: 100%;">
+        Please click on the link to confirm your registration, 
+        <a href="{{ activate_url }}/activate/{{ uidb64 }}/{{ token }}/">
+            {{ activate_url }}/activate/{{ uidb64 }}/{{ token }}/
+        </a>
+    </div>
+{% endblock body_content %}

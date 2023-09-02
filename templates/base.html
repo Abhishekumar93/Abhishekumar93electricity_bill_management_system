@@ -1,0 +1,17 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block email_title %}{% endblock email_title %}</title>
+  </head>
+  <body style="font-family: Helvetica Neue; font-size: 16px">
+    <h1>Hello {{first_name}}</h1>
+
+    {% block body_content %}{% endblock body_content %}
+
+    <p style="font-family: Helvetica Neue; font-size: 14px">Feel free to reach us for any queries</p>
+    <br>
+    <p>Thanks &amp; Regards<p>
+    <p>EBMS</p>
+  </body>
+</html>

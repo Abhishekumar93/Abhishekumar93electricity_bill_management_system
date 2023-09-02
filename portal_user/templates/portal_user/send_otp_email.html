@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block email_title %}OTP Email{% endblock email_title %}
+
+{% block body_content %}
+    <h2>Here is your OTP to login on our platform</h2>
+    <div style="text-align: center;float: left;clear:both;padding-top: 20px;padding-bottom: 20px;width: 100%;font-size: 50px;font-weight: bold;color: #727272">
+        {{otp}}
+    </div>
+{% endblock body_content %}
