@@ -14,7 +14,7 @@ from .token import account_activation_token
 from .models import PortalUser
 
 # Import Serializers Here
-from .serializers import PortalUserSerializer, PortalUserBasicDataSerializer, PortalUserUpdateSerializer
+from .serializers import PortalUserSerializer, PortalUserBasicDataSerializer, PortalUserUpdateSerializer, PortalUserDetailSerializer
 
 # Create your views here.
 
@@ -44,10 +44,11 @@ class PortalUserCreate(APIView):
             user = serializer.save()
             user.send_welcome_email()
             user.send_account_activation_mail()
-            response_data = {'message': 'Account created successfully!'}
+            response_data = {
+                'message': 'Account created successfully!. An activation email has been sent to your email id. Please activate your account before login.'}
             if request_type and request_type == "add":
                 response_data = {
-                    'message': f"User {user.first_name} added successfully!"}
+                    'message': f"User {user.first_name} added successfully!.  An activation email is sent to the user's email id."}
                 response_data["data"] = json.dumps(serializer.data)
 
             return Response(response_data, status=status.HTTP_201_CREATED)
@@ -74,6 +75,24 @@ class PortalUserUpdate(generics.UpdateAPIView):
     permission_classes = [permissions.IsAuthenticated, permissions.IsAdminUser]
     queryset = PortalUser.objects.all()
     serializer_class = PortalUserUpdateSerializer
+
+
+class PortalUserDetail(generics.RetrieveAPIView):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    serializer_class = PortalUserDetailSerializer
+    queryset = PortalUser.objects.all()
+
+
+class PortalUserOTP(APIView):
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request):
+        try:
+            user = PortalUser.objects.get(email=request.data["email"])
+            user.generate_otp()
+            return Response({'message': "We have sent an OTP on your email address. Please check your email"}, status=status.HTTP_200_OK)
+        except PortalUser.DoesNotExist:
+            return Response({'message': "Looks like you don't have an account on the platform."}, status=status.HTTP_404_NOT_FOUND)
 
 
 def activate(request, uidb64, token):

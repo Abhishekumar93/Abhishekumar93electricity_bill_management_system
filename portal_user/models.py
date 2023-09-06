@@ -57,7 +57,6 @@ class PortalUser(AbstractBaseUser, PermissionsMixin):
 
     otp = models.CharField(max_length=10, blank=True, default="")
 
-    last_login = models.DateTimeField(auto_now=True)
     failed_login_attempt = models.PositiveIntegerField(default=0, blank=False)
 
     USERNAME_FIELD = "email"
