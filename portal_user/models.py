@@ -123,11 +123,11 @@ class PortalUser(AbstractBaseUser, PermissionsMixin):
             return HttpResponse("Something went wrong!")
 
     def generate_otp(self):
-        digits = "0123456789"
+        digits = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
         self.otp = ""
 
         for i in range(6):
-            self.otp += digits[int(math.floor(random.random() * 10))]
+            self.otp += digits[int(math.floor(random.random() * len(digits)))]
         self.save()
 
         mail_subject = "OTP To Login On Our Platform"

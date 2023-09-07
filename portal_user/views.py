@@ -90,9 +90,9 @@ class PortalUserOTP(APIView):
         try:
             user = PortalUser.objects.get(email=request.data["email"])
             user.generate_otp()
-            return Response({'message': "We have sent an OTP on your email address. Please check your email"}, status=status.HTTP_200_OK)
+            return Response({'message': "otp_sent"}, status=status.HTTP_200_OK)
         except PortalUser.DoesNotExist:
-            return Response({'message': "Looks like you don't have an account on the platform."}, status=status.HTTP_404_NOT_FOUND)
+            return Response({'message': "user_not_found"}, status=status.HTTP_404_NOT_FOUND)
 
 
 def activate(request, uidb64, token):
