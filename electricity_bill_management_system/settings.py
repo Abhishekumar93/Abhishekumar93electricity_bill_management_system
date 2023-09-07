@@ -27,9 +27,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-6=*fs9sai-**ke%)htkuvubqj^(q3x2s7hwgu!rrf&xwa*c(!6"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get("DB_NAME")
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
+if DEBUG == True:
+    ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
 
 
 # Application definition
@@ -80,9 +81,12 @@ AUTHENTICATION_BACKENDS = (
 # Cors Settings
 CORS_ORIGIN_ALLOW_ALL = False
 
-CORS_ORIGIN_WHITELIST = (
-    "http://localhost:3000",
-)
+if DEBUG == True:
+    CORS_ORIGIN_WHITELIST = (
+        "http://localhost:3000",
+    )
+else:
+    CORS_ORIGIN_WHITELIST = ("https://ebms.vercel.app",)
 
 ROOT_URLCONF = "electricity_bill_management_system.urls"
 
@@ -108,8 +112,11 @@ WSGI_APPLICATION = "electricity_bill_management_system.wsgi.application"
 AUTH_USER_MODEL = "portal_user.PortalUser"
 
 # Email Settings
-EMAIL_PORT = 1025
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+if DEBUG == True:
+    EMAIL_PORT = 1025
+    EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+else:
+    EMAIL_BACKEND = 'django_ses.SESBackend'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
@@ -168,3 +175,5 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 DEFAULT_FROM_EMAIL = "ebms@ebms.com"
 CLIENT_DOMAIN = os.environ.get("CLIENT_DOMAIN")
+AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
