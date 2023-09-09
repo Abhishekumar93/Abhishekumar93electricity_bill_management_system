@@ -11,10 +11,8 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-from dotenv import load_dotenv
 import os
 
-load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,13 +25,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-6=*fs9sai-**ke%)htkuvubqj^(q3x2s7hwgu!rrf&xwa*c(!6"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ["DEBUG"]
 
-if DEBUG == "True":
-    ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
-else:
-    ALLOWED_HOSTS = [
-        "EbmsAdmin-env.eba-3tg3pfsh.us-east-1.elasticbeanstalk.com", "52.204.36.145", "ec2-52-204-36-145.compute-1.amazonaws.com"]
+ALLOWED_HOSTS = [
+    "Ebms-admin-env.eba-unykp73u.us-east-1.elasticbeanstalk.com"]
 
 
 # Application definition
@@ -85,12 +79,8 @@ AUTHENTICATION_BACKENDS = (
 # Cors Settings
 CORS_ORIGIN_ALLOW_ALL = False
 
-if DEBUG == "True":
-    CORS_ORIGIN_WHITELIST = (
-        "http://localhost:3000",
-    )
-else:
-    CORS_ORIGIN_WHITELIST = ("https://ebms.vercel.app",)
+
+CORS_ORIGIN_WHITELIST = ("https://ebms.vercel.app",)
 
 ROOT_URLCONF = "electricity_bill_management_system.urls"
 
@@ -116,25 +106,22 @@ WSGI_APPLICATION = "electricity_bill_management_system.wsgi.application"
 AUTH_USER_MODEL = "portal_user.PortalUser"
 
 # Email Settings
-if DEBUG == "True":
-    EMAIL_PORT = 1025
-    EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-else:
-    EMAIL_BACKEND = 'django_ses.SESBackend'
+
+EMAIL_BACKEND = 'django_ses.SESBackend'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.environ["DB_NAME"],
-        "USER": os.environ["DB_USER"],
-        "PASSWORD": os.environ["DB_PASSWORD"],
-        "HOST": os.environ["DB_HOST"],
-        "PORT": os.environ["DB_PORT"],
-    }
-}
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": os.environ["DB_NAME"],
+#         "USER": os.environ["DB_USER"],
+#         "PASSWORD": os.environ["DB_PASSWORD"],
+#         "HOST": os.environ["DB_HOST"],
+#         "PORT": os.environ["DB_PORT"],
+#     }
+# }
 
 
 # Password validation
