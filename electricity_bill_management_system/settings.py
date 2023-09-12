@@ -33,7 +33,7 @@ if DEBUG == "True":
     ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
 else:
     ALLOWED_HOSTS = [
-        "ec2-54-172-226-77.compute-1.amazonaws.com", "54.172.226.77"]
+        "ec2-54-208-250-220.compute-1.amazonaws.com", "54.208.250.220"]
 
 
 # Application definition
