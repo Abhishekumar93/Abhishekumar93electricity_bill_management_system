@@ -51,7 +51,6 @@ INSTALLED_APPS = [
     "dj_rest_auth",
     "django_filters",
     "corsheaders",
-    'ebhealthcheck.apps.EBHealthCheckConfig',
     # Custom Apps
     "portal_user.apps.PortalUserConfig",
 ]
