@@ -33,7 +33,7 @@ if DEBUG == "True":
     ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
 else:
     ALLOWED_HOSTS = [
-        "django-env.eba-5wcuczm2.us-east-1.elasticbeanstalk.com"]
+        "ec2-54-172-226-77.compute-1.amazonaws.com", "54.172.226.77"]
 
 
 # Application definition
