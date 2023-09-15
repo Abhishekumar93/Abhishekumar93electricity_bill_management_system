@@ -42,13 +42,12 @@ class PortalUser(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(max_length=255, blank=False)
     last_name = models.CharField(max_length=255, blank=True, default="")
     phone_number = models.CharField(max_length=12, blank=True, default="")
-    consumer_number = models.CharField(max_length=20,
-                                       unique=True, db_index=True, null=True, blank=True)
+    consumer_or_staff_id = models.CharField(max_length=20,
+                                            unique=True, db_index=True, null=True, blank=True)
 
     USER_ROLE = (("0", "Staff"), ("1", "Consumer"))
 
     user_role = models.CharField(max_length=1, choices=USER_ROLE, default="0")
-    staff_id = models.CharField(max_length=10, blank=True, default="")
 
     date_joined = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=False)

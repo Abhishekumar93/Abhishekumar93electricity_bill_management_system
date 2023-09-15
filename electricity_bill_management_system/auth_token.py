@@ -27,11 +27,11 @@ class CustomAuthToken(ObtainAuthToken):
             if (request.data["password"] == user.otp) or (
                 user.check_password(request.data["password"])
             ):
-                requested_staff_id = request.data["staff_id"]
+                requested_consumer_or_staff_id = request.data["consumer_or_staff_id"]
 
-                if (requested_staff_id and not user.is_staff) or (requested_staff_id and user.staff_id != requested_staff_id):
+                if (requested_consumer_or_staff_id and not user.is_staff) or (requested_consumer_or_staff_id and user.is_staff and user.consumer_or_staff_id != requested_consumer_or_staff_id):
                     return JsonResponse({'message': "staff_account_not_found"}, status=status.HTTP_400_BAD_REQUEST)
-                elif not requested_staff_id and user.is_staff:
+                elif not requested_consumer_or_staff_id and user.is_staff:
                     return JsonResponse({'message': "consumer_account_not_found"}, status=status.HTTP_400_BAD_REQUEST)
                 else:
                     pass

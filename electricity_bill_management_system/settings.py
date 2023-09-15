@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-6=*fs9sai-**ke%)htkuvubqj^(q3x2s7hwgu!rrf&xwa*c(!6"
+SECRET_KEY = os.environ["SECRET_KEY"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ["DEBUG"]
@@ -33,7 +33,7 @@ if DEBUG == "True":
     ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
 else:
     ALLOWED_HOSTS = [
-        "ec2-54-208-250-220.compute-1.amazonaws.com", "54.208.250.220"]
+        "ec2-54-208-250-220.compute-1.amazonaws.com", " "]
 
 
 # Application definition
@@ -115,11 +115,12 @@ WSGI_APPLICATION = "electricity_bill_management_system.wsgi.application"
 AUTH_USER_MODEL = "portal_user.PortalUser"
 
 # Email Settings
-if DEBUG == "True":
-    EMAIL_PORT = 1025
-    EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-else:
-    EMAIL_BACKEND = 'django_ses.SESBackend'
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_PORT = os.environ["EMAIL_PORT"]
+if DEBUG == "False":
+    EMAIL_HOST = os.environ["EMAIL_HOST"]
+    EMAIL_USE_TLS = True
+    EMAIL_HOST_PASSWORD = os.environ["EMAIL_HOST_PASSWORD"]
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
@@ -182,13 +183,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = "static/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-DEFAULT_FROM_EMAIL = "ebms@ebms.com"
+DEFAULT_FROM_EMAIL = os.environ["EMAIL_HOST_USER"]
 CLIENT_DOMAIN = os.environ["CLIENT_DOMAIN"]
 AWS_ACCESS_KEY_ID = os.environ["AWS_ACCESS_KEY_ID"]
 AWS_SECRET_ACCESS_KEY = os.environ["AWS_SECRET_ACCESS_KEY"]
